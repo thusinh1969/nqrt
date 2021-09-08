@@ -3,6 +3,7 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom'
 
 import MainPage from './nx/components/mainpage/mainpage'
+
 import Header from './nx/components/mainpage/header'
 import NavBar from './nx/components/mainpage/navbar'
 import Footer from './nx/components/mainpage/footer'
