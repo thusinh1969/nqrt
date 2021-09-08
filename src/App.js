@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+
+import { Route, Switch } from 'react-router-dom'
+
+import MainPage from './nx/components/mainpage/mainpage'
+import Header from './nx/components/mainpage/header'
+import NavBar from './nx/components/mainpage/navbar'
+import Footer from './nx/components/mainpage/footer'
+
+import PredictMain from './nx/components/predict_styles/predict_main'
+import RecSysMain  from './nx/components/recommendations/recsys_main'
+import CreationSelect from './nx/components/creations/creation_select'
+import About from './nx/components/mainpage/about'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <hr/>
+      <NavBar />
+      <hr/>
+      <Switch>
+          <Route exact path='/' component={MainPage}/>
+          <Route exact path='/style' component={PredictMain}/>
+          <Route exact path='/creation' component={CreationSelect}/>
+          <Route exact path='/recsys' component={RecSysMain}/>
+          <Route exact path='/about' component={About}/>
+      </Switch>
+      <hr/>
+      <Footer />
     </div>
   );
 }
