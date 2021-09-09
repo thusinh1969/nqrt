@@ -6,26 +6,58 @@ import PredictDescribe from './describe/describe'
 
 class PredictShow extends Component {
 
-    constructor() {
+    constructor(props) {
+        console.log(' LOG' + props)
         super();
         this.state = {
+            prediction_success: 0,
+            disableClick: 'enabled',
+            acceptedFiles: props.toCall,
             toggleState: [1,0,0]
         }
         this.toggleTab = this.toggleTab.bind(this);
+        this.createSubmitButton = this.createSubmitButton.bind(this);
+        this.callPredictions    = this.callPredictions.bind(this);
     }
 
 toggleTab = (index) => {
     let toggleState_copy = this.state.toggleState.map( (value, idx) => {
-            console.log(index, 'ID:' + idx)
             return (idx===index) ? 1 : 0
         }
     )
-    console.log(toggleState_copy)
     this.setState({toggleState:toggleState_copy})
 }
 
+callPredictions = () => {
+    // Disable button while predicting. If predict with error --> enable again
+    console.log('Call prediction - disable button')
+    const btn = document.getElementById("predictionButton")
+    btn.disabled = true;
+    btn.innerText  = "Đang tính toán...";
+
+    // Call prediction here
+    // If successful, call this.state.setState with predicted=1
+}
+
+createSubmitButton = ( acceptedFiles => {
+    if (acceptedFiles.length > 0) {   
+      return <button id="predictionButton" onClick={this.callPredictions} type="button" class="btn btn-warning">Bắt đầu phân tích</button>
+    }
+    else {
+      return null;
+    }
+  })
+
 render() {
 
+    console.log(this.props.toCall)
+    if (this.props.toCall.length === 0) {
+        return null
+    }
+    else if (this.state.prediction_success===0) {
+        return this.createSubmitButton(this.props.toCall)
+    }
+    else 
         return (
             <div className="container">
             <div className="bloc-tabs">

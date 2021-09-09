@@ -17,7 +17,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 function App() {
   return (
-    <div class="container">
+    <div>
       <Header />
       <hr/>
       <NavBar />

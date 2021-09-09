@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 
-import PredictShow from './predict_show.jsx'
+import UploadSingleImage from './upload_single.jsx'
 
 class PredictMain extends Component {
     constructor() {
@@ -9,8 +9,7 @@ class PredictMain extends Component {
 
     render() {
         return <div>
-            <h3> *** Xác định Phong Cách Nội Thất bằng cách tải 1 ảnh !  *** </h3>
-            <PredictShow />
+            <UploadSingleImage />
         </div>
     }
 }
