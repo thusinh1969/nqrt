@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import 'bootstrap/dist/css/bootstrap.css'
 import './predict_show.css'
 
+import PredictDescribe from './describe/describe'
+
 class PredictShow extends Component {
 
     constructor() {
@@ -51,13 +53,8 @@ render() {
                 <div
                 className={this.state.toggleState[0] === 1 ? "content  active-content" : "content"}
                 >
-                <h2>Content 1</h2>
                 <hr />
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-                    praesentium incidunt quia aspernatur quasi quidem facilis quo nihil
-                    vel voluptatum?
-                </p>
+                    <PredictDescribe />
                 </div>
 
                 <div

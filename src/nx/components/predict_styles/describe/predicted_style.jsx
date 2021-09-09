@@ -1,15 +1,15 @@
 import React, { Component } from "react"
 
-class Predicts extends Component {
+class PredictStyle extends Component {
     constructor() {
         super()
     }
 
     render() {
         return <div>
-            <h3>Predicts</h3>
+            <h3>Predict Style component</h3>
         </div>
     }
 }
 
-export default Predicts
+export default PredictStyle
