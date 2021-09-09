@@ -1,9 +1,11 @@
 import React, { Component } from "react"
 
-import PredictMain from '../predict_styles/predict_main'
-import RecSysMain  from '../recommendations/recsys_main'
-import CreationSelect from '../creations/creation_select'
-import About from './about'
+import 'bootstrap/dist/css/bootstrap.css'
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
+
+import logo from './logo.svg'
+
+import './navbar.css'
 
 class NavBar extends Component {
     constructor() {
@@ -11,17 +13,38 @@ class NavBar extends Component {
     }
 
     render() {
-        return <div>
-            <h3>NAVBAR</h3>
-            <ul>
-                <li><a href='/'> * Trang chủ </a></li>
-                <li><a href='/style'> * Phong cách </a></li>
-                <li><a href='/recsys'>  * Tìm hàng </a></li>
-                <li><a href='/creation'>  * Sáng tạo </a></li>
-                <li><a href='/about'> * NQRT ? </a></li>
-            </ul>
+        return (
+            <div class="NavBar">
+                <Navbar bg="dark" 
+                variant="dark" 
+                fixed='top'
+                sticky='top' 
+                expand='md'
+                collapseOnSelect>
+                    <Navbar.Brand>
+                        <img src={logo} width='50px' height='50px' alt='logo'/>{' '}
+                        NQRT
+                    </Navbar.Brand>
 
-       </div>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse>
+                        <Nav>
+                            <Nav.Link href='/'>Trang chủ</Nav.Link>
+                            <Nav.Link href='/style'>Phong cách</Nav.Link>
+
+                            <NavDropdown title='Tìm mua'>
+                                <NavDropdown.Item href='https://nhaxinh.vn/' target='_blank'>Nhà Xinh</NavDropdown.Item>
+                                <NavDropdown.Divider/>
+                                <NavDropdown.Item href='/recsys'>Cửa hàng NQRT</NavDropdown.Item>
+                            </NavDropdown>
+
+                            <Nav.Link href='/creation'>Sáng tạo</Nav.Link>
+                            <Nav.Link href='/about'>Liên hệ</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            </div>
+        )
     }
 }
 
