@@ -1,6 +1,8 @@
 import React, { Component } from "react"
-import 'bootstrap/dist/css/bootstrap.css'
+//import 'bootstrap/dist/css/bootstrap.css'
 import './predict_show.css'
+import 'semantic-ui-css/semantic.min.css'
+import { Button, Segment, Label, Grid } from "semantic-ui-react"
 
 import PredictDescribe from './describe/describe'
 
@@ -10,8 +12,7 @@ class PredictShow extends Component {
         console.log(' LOG' + props)
         super();
         this.state = {
-            prediction_success: 0,
-            disableClick: 'enabled',
+            prediction_status: 0,
             acceptedFiles: props.toCall,
             toggleState: [1,0,0]
         }
@@ -19,6 +20,14 @@ class PredictShow extends Component {
         this.createSubmitButton = this.createSubmitButton.bind(this);
         this.callPredictions    = this.callPredictions.bind(this);
     }
+
+    componentDidUpdate(prevProps) {
+        console.log('Calling state when prop change lead to component udated')
+        if (prevProps.prediction_status !== this.props.prediction_status) {
+            this.setState({prediction_status:this.props.prediction_status})
+        }
+        console.log(this.state.prediction_status)
+      }
 
 toggleTab = (index) => {
     let toggleState_copy = this.state.toggleState.map( (value, idx) => {
@@ -36,12 +45,24 @@ callPredictions = () => {
     btn.innerText  = "Đang tính toán...";
 
     // Call prediction here
-    // If successful, call this.state.setState with predicted=1
+    // If successful, call
+    //this.setState({prediction_success:1})
+    setTimeout(() => {  this.setState({prediction_status:2}) }, 2000);
 }
 
 createSubmitButton = ( acceptedFiles => {
+    console.log('--> Display and wait for pressing')
     if (acceptedFiles.length > 0) {   
-      return <button id="predictionButton" onClick={this.callPredictions} type="button" class="btn btn-warning">Bắt đầu phân tích</button>
+        return (
+            <Segment>
+            <Grid>
+              <Grid.Column textAlign="center">
+                <Button id="predictionButton" size="small" className="blue center" onClick={this.callPredictions}>Bắt đầu phân tích</Button>
+              </Grid.Column>
+            </Grid>
+          </Segment>
+        
+        )
     }
     else {
       return null;
@@ -50,14 +71,17 @@ createSubmitButton = ( acceptedFiles => {
 
 render() {
 
-    console.log(this.props.toCall)
-    if (this.props.toCall.length === 0) {
+    console.log(this.props.toCall.length, this.props.prediction_status, this.state.prediction_status, )
+    if ((this.props.toCall.length === 0) && (this.state.prediction_status===0)) {
+        console.log('Nothing to display')
         return null
     }
-    else if (this.state.prediction_success===0) {
+    else if (this.props.prediction_status===1) {
+        console.log('Display button')
         return this.createSubmitButton(this.props.toCall)
     }
     else 
+        console.log('Display tabs')
         return (
             <div className="container">
             <div className="bloc-tabs">
