@@ -1,49 +1,22 @@
-import React, { Component, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useEffect } from 'react';
 import {useDropzone} from 'react-dropzone';
+import axios from "axios";
+
 import PredictShow from './predict_show.jsx'
 
 import 'semantic-ui-css/semantic.min.css'
 import './upload.css'
-import { Button, Segment, Label, Grid } from "semantic-ui-react"
+import { Button, Tab} from "semantic-ui-react"
 
 import PredictDescribe from './describe/describe'
 
 function UploadSingleImage () {
-
-  const [files, setFiles] = useState([])
+  
+  const [files, setFiles] = useState(null)
   const [prediction_status, setPredictionStatus] = useState(0)
-  const [toggleState, setToggleState] = useState([1,0,0])
-
-  const [clickStatus, setClickStatus] = useState("blue center button")
-
-  const thumbsContainer = {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 16,
-    marginLeft: 12,
-  };
-
-  const thumb = {
-    display: 'flex',
-    borderRadius: 2,
-    border: '1px solid #eaeaea',
-    marginBottom: 8,
-    marginRight: 8,
-    width: 400,
-    height: 400,
-    padding: 4,
-    boxSizing: 'border-box',
-    align: 'center',
-  };
-
-  const thumbInner = {
-    display: 'flex',
-    minWidth: 400,
-    overflow: 'hidden',
-    align: 'center',
-  };
+  const [clickStatus, setClickStatus] = useState("ui active button")
+  const [actionTextButton, setActionTextButton] = useState("Bắt đầu")
+  const [response, setResponse] = useState(null)
 
   const img = {
     display: 'flex',
@@ -91,153 +64,90 @@ function UploadSingleImage () {
       validator: imageTypeValidator,
       onDrop: acceptedFiles => {
         console.log('Number of files', acceptedFiles.length)
+        if (acceptedFiles != files) {
+          setPredictionStatus(1);
+          setActionTextButton("Bắt đầu")
+          setResponse(null);
+        }
         setFiles(acceptedFiles.map(file => Object.assign(file,  {
             preview: URL.createObjectURL(file)
           })));
-        setPredictionStatus(1)
-        setClickStatus("ui blue center button")
       }
   })
 
-  const thumbs = files.map(file => (
-    <div class="column center">
-        <img class="ui large centered image" src={file.preview}></img>
-    </div>
-  ));
-
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
-    files.forEach(file => URL.revokeObjectURL(file.preview));
+    console.log('Call useEffect')
+    if (files != null) {
+      files.forEach(file => URL.revokeObjectURL(file.preview));
+    }
   }, [files]);
 
-  const toggleTab = (index) => {
-    let toggleState_copy = toggleState.map( (value, idx) => {
-            return (idx===index) ? 1 : 0
-        }
-    )
-    setToggleState(toggleState_copy)
-  }
-
-  const readyPredict = ( () => {
-    console.log(files.length, prediction_status)
-    if ((files.length === 0) | (prediction_status===0)) {
-        console.log('No Tab')
-        return null
-    }
-    if (prediction_status==2) {
-      console.log('Display tabs')
-      return (
-          <div className="container">
-            <div className="bloc-tabs">
-                <button
-                    className={toggleState[0] === 1 ? "tabs active-tabs" : "tabs"}
-                    onClick={ () => toggleTab(0)}
-                    >
-                    Diễn giải
-                </button>
-                <button
-                    className={toggleState[1] === 1 ? "tabs active-tabs" : "tabs"}
-                    onClick={() => toggleTab(1)}
-                    >
-                    Đặc thù
-                </button>
-                <button
-                    className={toggleState[2] === 1 ? "tabs active-tabs" : "tabs"}
-                    onClick={() => toggleTab(2)}
-                    >
-                    Không tương đồng
-                </button>
-            </div>
-  
-            <div className="content-tabs">
-                <div
-                className={toggleState[0] === 1 ? "content  active-content" : "content"}
-                >
-                <hr />
-                    <PredictDescribe />
-                </div>
-  
-                <div
-                className={toggleState[1] === 1 ? "content  active-content" : "content"}
-                >
-                <h2>Content 2</h2>
-                <hr />
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
-                    voluptatum qui adipisci.
-                </p>
-                </div>
-  
-                <div
-                className={toggleState[2] === 1 ? "content  active-content" : "content"}
-                >
-                <h2>Content 3</h2>
-                <hr />
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos sed
-                    nostrum rerum laudantium totam unde adipisci incidunt modi alias!
-                    Accusamus in quia odit aspernatur provident et ad vel distinctio
-                    recusandae totam quidem repudiandae omnis veritatis nostrum
-                    laboriosam architecto optio rem, dignissimos voluptatum beatae
-                    aperiam voluptatem atque. Beatae rerum dolores sunt.
-                </p>
-                </div>
-            </div>
-            </div>
-        );
-    }
-  })
-  const callPredictions = () => {
-    // Disable button while predicting. If predict with error --> enable again
+  async function callPredictions () {
     console.log('Call prediction - disable button')
-    //console.logbtn.innerText  = "Đang tính toán...";
     setClickStatus("ui disabled button")
-  
-    // Call prediction here
-    // If successful, call
-    console.log('Predicting...', prediction_status)
-    setTimeout(() => { 
-      setPredictionStatus(2);
-      readyPredict ();
-  
-    }, 2000);
+    setActionTextButton("Đang tính toán...")
+
+    let formdata = new FormData();
+    formdata.append("images",  files[0]);
+
+    try {
+      const res = await axios.post('http://192.168.1.18:8080/styling', formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Cache-Control': 'no-cache',
+          'Accept': '*/*',
+        },
+      })
+      console.log('PREDICTION thành công !!!', res['data'])
+      setClickStatus("ui active button")
+      setActionTextButton("Bắt đầu")
+      setResponse(res['data'])
+      }
+      catch(err) {
+          console.log(err)
+          setClickStatus("ui active button")
+          setActionTextButton("Bắt đầu")
+        }
   }
 
-  const createSubmitButton = ( () => {
-    if (files.length > 0) {   
-      console.log('--> Creating createSubmitButton', files.length)
+  const createSubmitButton = (files, clickStatus) => {
+    if (files != null) {   
+      console.log('Creating createSubmitButton', files.length, clickStatus)
       return (
-            <Segment>
-              <Grid>
-                <Grid.Column textAlign="center">
-                  <Button id="predictionButton" size="small" class={clickStatus} onClick={callPredictions}>Bắt đầu phân tích</Button>
-                </Grid.Column>
-              </Grid>
-            </Segment>
-        
-        )
+          <Button class={clickStatus} onClick={callPredictions}>{actionTextButton}</Button>
+      )
+      }
+    return null
+  }
+  
+  const thumbs = (files) => {
+    console.log('Call thumb display', files)
+    if (files != null) {
+      return (
+        <div class="column center">
+          <img class="ui large centered image" src={files[0].preview}></img>
+      </div>
+      )
     }
-    else {
-      return null;
-    }
-  })
+    return null
+  };
 
   return (
       <section>
+        {console.log('Re-redner display')}
         <div  className="dropzone" {...getRootProps({ className: 'dropzone' })}>
           <input {...getInputProps()} />
           <p>Kéo thả ảnh hoặc bấm vào đây để chọn tệp. 
             <br/><i>(Chỉ tệp ảnh và có kích thước nhỏ hơn 4MBytes)</i></p>
         </div>
         <div class="ui one column centered grid">
-              {thumbs}
+              {thumbs(files)}
         </div>
         <div class="ui one column centered grid">
-          {createSubmitButton(files, prediction_status)}
+          {createSubmitButton(files, clickStatus)}
         </div>
-        <div class="ui one column centered grid">
-          {readyPredict(files, prediction_status)}
-        </div>
+        {<PredictShow res={response} />}
       </section>  
   )
 

@@ -5,17 +5,23 @@ import PredictStyle from './predicted_style.jsx'
 import PredictColor from './predicted_color.jsx'
 
 class PredictDescribe extends Component {
-    constructor() {
+    constructor(props) {
         super()
     }
 
     render() {
         return <div>
-            <PredictClass />
-            <hr/>
-            <PredictStyle />
-            <hr/>
-            <PredictColor />
+                <div>
+                    <hr/>
+                    <PredictClass res={this.props.res}/>
+                </div>
+                <div>
+                    <hr/>
+                    <PredictStyle res={this.props.res}/></div>
+                <div>
+                    <hr/>
+                    <PredictColor res={this.props.res}/>
+                </div>
         </div>
     }
 }

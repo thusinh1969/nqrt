@@ -1,14 +1,19 @@
 import React, { Component } from "react"
 
 class PredictColor extends Component {
-    constructor() {
+    constructor(props) {
         super()
     }
 
     render() {
-        return <div>
-            <h3>Predict Color component</h3>
-        </div>
+        console.log('---> Class display prediction', this.props.res.class)
+        return (
+            <div>
+                <ul>
+                    {this.props.res.color.map((data, index) => <li key={index}>{data.Class} {data.score}</li>)}   
+                </ul>
+            </div>
+        )
     }
 }
 

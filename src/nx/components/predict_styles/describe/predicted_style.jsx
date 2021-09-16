@@ -1,14 +1,19 @@
 import React, { Component } from "react"
 
 class PredictStyle extends Component {
-    constructor() {
+    constructor(props) {
         super()
     }
 
     render() {
-        return <div>
-            <h3>Predict Style component</h3>
-        </div>
+        console.log('---> Class display prediction', this.props.res.class)
+        return (
+            <div>
+                <ul>
+                    {this.props.res.style.map((data, index) => <li key={index}>{data.Class} {data.score}</li>)}   
+                </ul>
+            </div>
+        )
     }
 }
 
