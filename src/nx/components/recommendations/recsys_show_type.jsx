@@ -15,6 +15,8 @@ export default class RecSysShow_Type extends Component {
                     {this.props.res['matches'].map((item) => {
                         return <Carousel.Item>
                             <img width="100%" height='auto' src={item['url']} />
+                            <br/> ** SCORE: {item['score']} ** 
+                            <br/>{item['SAP_desc']}
                         </Carousel.Item>
                         })
                     }

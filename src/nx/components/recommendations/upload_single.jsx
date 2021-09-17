@@ -53,7 +53,8 @@ function UploadSingleImage () {
   acceptedFiles,
   fileRejections,
   getRootProps,
-  getInputProps
+  getInputProps,
+  open
   } = useDropzone({
       maxFiles:5,
       minSize: 5*1024,
@@ -63,7 +64,7 @@ function UploadSingleImage () {
       validator: imageTypeValidator,
       onDrop: acceptedFiles => {
         console.log('Number of files', acceptedFiles.length)
-        if (acceptedFiles !== files) {
+        if ((acceptedFiles.length > 0) && (acceptedFiles !== files)) {
           setPredictionStatus(1);
           setActionTextButton("Bắt đầu")
           setResponse(null);
@@ -91,7 +92,7 @@ function UploadSingleImage () {
     formdata.append("images",  files[0]);
 
     try {
-      const res = await axios.post('http://192.168.1.18:8080/recsys', formdata, {
+      const res = await axios.post('http://192.168.1.18:8088/recsys', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',
@@ -123,11 +124,13 @@ function UploadSingleImage () {
   }
 
   const createSubmitButton = (files, clickStatus) => {
-    if (files !== null) {   
-      console.log('Creating createSubmitButton', files.length, clickStatus)
-      return (
-          <Button class={clickStatus} onClick={callPredictions}>{actionTextButton}</Button>
-      )
+    if (files !== null) {
+        if (files.length > 0) { 
+            console.log('Creating createSubmitButton', files.length, clickStatus)
+            return (
+                <Button class={clickStatus} onClick={callPredictions}>{actionTextButton}</Button>
+            )
+        }
       }
     return null
   }
@@ -135,21 +138,25 @@ function UploadSingleImage () {
   const thumbs = (files) => {
     console.log('Call thumb display', files)
     if (files !== null) {
-      return (
-        <div class="column center">
-          <img class="ui large centered image" src={files[0].preview}></img>
-      </div>
-      )
+        if (files.length > 0) {
+            return (
+                <div class="column center">
+                <img class="ui large centered image" src={files[0].preview}></img>
+            </div>
+            )
+        }
     }
     return null
   };
 
+// style={{"cursor" : "pointer"}} 
+
   return (
       <section>
         {console.log('Re-redner display')}
-        <div  className="dropzone" {...getRootProps({ className: 'dropzone' })}>
-          <input {...getInputProps()} />
-          <p>Kéo thả ảnh hoặc bấm vào đây để chọn tệp. 
+        <div style={{cursor : "pointer"}} className="dropzone" {...getRootProps({ className: 'dropzone' })}>
+          <input onClick={open} style={{cursor : "pointer"}}  {...getInputProps()}/>
+          <p >Kéo thả ảnh hoặc bấm để chọn tệp. 
             <br/><i>(Chỉ tệp ảnh và có kích thước nhỏ hơn 4MBytes)</i></p>
         </div>
         <div class="ui one column centered grid">

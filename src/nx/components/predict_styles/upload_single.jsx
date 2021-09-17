@@ -64,7 +64,7 @@ function UploadSingleImage () {
       validator: imageTypeValidator,
       onDrop: acceptedFiles => {
         console.log('Number of files', acceptedFiles.length)
-        if (acceptedFiles != files) {
+        if ((acceptedFiles.length > 0) && (acceptedFiles != files)) {
           setPredictionStatus(1);
           setActionTextButton("Bắt đầu")
           setResponse(null);
@@ -79,7 +79,9 @@ function UploadSingleImage () {
     // Make sure to revoke the data uris to avoid memory leaks
     console.log('Call useEffect')
     if (files != null) {
-      files.forEach(file => URL.revokeObjectURL(file.preview));
+      if (files.length > 0) {
+        files.forEach(file => URL.revokeObjectURL(file.preview));
+      }
     }
   }, [files]);
 
@@ -92,7 +94,7 @@ function UploadSingleImage () {
     formdata.append("images",  files[0]);
 
     try {
-      const res = await axios.post('http://192.168.1.18:8080/styling', formdata, {
+      const res = await axios.post('http://192.168.1.18:8088/styling', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',
@@ -113,10 +115,12 @@ function UploadSingleImage () {
 
   const createSubmitButton = (files, clickStatus) => {
     if (files != null) {   
-      console.log('Creating createSubmitButton', files.length, clickStatus)
-      return (
-          <Button class={clickStatus} onClick={callPredictions}>{actionTextButton}</Button>
-      )
+      if (files.length > 0) {
+          console.log('Creating createSubmitButton', files.length, clickStatus)
+          return (
+              <Button class={clickStatus} onClick={callPredictions}>{actionTextButton}</Button>
+          )
+        }
       }
     return null
   }
@@ -124,11 +128,13 @@ function UploadSingleImage () {
   const thumbs = (files) => {
     console.log('Call thumb display', files)
     if (files != null) {
-      return (
-        <div class="column center">
-          <img class="ui large centered image" src={files[0].preview}></img>
-      </div>
-      )
+      if (files.length > 0) {
+        return (
+          <div class="column center">
+            <img class="ui large centered image" src={files[0].preview}></img>
+        </div>
+        )
+      }
     }
     return null
   };
