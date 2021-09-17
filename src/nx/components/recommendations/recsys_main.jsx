@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 
+import UploadSingleImage from './upload_single.jsx'
+
 class RecSysMain extends Component {
     constructor() {
         super()
@@ -7,7 +9,7 @@ class RecSysMain extends Component {
 
     render() {
         return <div>
-            <h3>*** Tải 1 ảnh để tìm nội thất phù hợp ***</h3>
+            <UploadSingleImage />
         </div>
     }
 }

@@ -20,13 +20,9 @@ render () {
             { menuItem: 'Đặc thù', render: () => <Tab.Pane><div><PredictHeatmap  res={this.props.res}/></div></Tab.Pane> },
             { menuItem: 'Không tương đồng', render: () => <Tab.Pane><PredictUnmatch  res={this.props.res}/></Tab.Pane> },
         ]
-        console.log('==> Checking response', this.props.res)
         if (this.props.res === null){
-            console.log('No Tab')
             return null
         } else {
-            console.log('==> Calling Prediction Tab')
-            console.log(panes)
             return <Tab panes={panes} />
         }
     }

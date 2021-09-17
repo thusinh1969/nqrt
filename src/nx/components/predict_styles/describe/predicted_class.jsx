@@ -1,4 +1,7 @@
 import React, { Component } from "react"
+import ProgressBar from 'react-percent-bar';
+
+import './predicted_class.scss';
 
 class PredictClass extends Component {
     constructor(props) {
@@ -8,10 +11,9 @@ class PredictClass extends Component {
     render() {
         console.log('---> Class display prediction', this.props.res.class)
         return (
-            <div>
-                <ul>
-                    {this.props.res.class.map((data, index) => <li key={index}>{data.Class} {data.score}</li>)}   
-                </ul>
+            <div className="classDiv"><h2>Không gian</h2>
+                {this.props.res.class.map((data, index) => <p key={index}>{data.Class} 
+                <ProgressBar colorShift={true} fillColor="orange" percent={data.score*100}/></p>)}
             </div>
         )
     }

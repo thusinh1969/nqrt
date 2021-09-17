@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {useDropzone} from 'react-dropzone';
 import axios from "axios";
 
-import PredictShow from './predict_show.jsx'
+import RecSysShow from './recsys_show.jsx'
 
 import 'semantic-ui-css/semantic.min.css'
 import './upload.css'
 import { Button, Tab} from "semantic-ui-react"
-
-import PredictDescribe from './describe/describe'
 
 function UploadSingleImage () {
   
@@ -17,6 +15,7 @@ function UploadSingleImage () {
   const [clickStatus, setClickStatus] = useState("ui active button")
   const [actionTextButton, setActionTextButton] = useState("Bắt đầu")
   const [response, setResponse] = useState(null)
+  const [dropBox, setDropBox] = useState(null)
 
   const img = {
     display: 'flex',
@@ -64,7 +63,7 @@ function UploadSingleImage () {
       validator: imageTypeValidator,
       onDrop: acceptedFiles => {
         console.log('Number of files', acceptedFiles.length)
-        if (acceptedFiles != files) {
+        if (acceptedFiles !== files) {
           setPredictionStatus(1);
           setActionTextButton("Bắt đầu")
           setResponse(null);
@@ -78,7 +77,7 @@ function UploadSingleImage () {
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
     console.log('Call useEffect')
-    if (files != null) {
+    if (files !== null) {
       files.forEach(file => URL.revokeObjectURL(file.preview));
     }
   }, [files]);
@@ -92,7 +91,7 @@ function UploadSingleImage () {
     formdata.append("images",  files[0]);
 
     try {
-      const res = await axios.post('http://192.168.1.18:8080/styling', formdata, {
+      const res = await axios.post('http://192.168.1.18:8080/recsys', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',
@@ -102,7 +101,19 @@ function UploadSingleImage () {
       console.log('PREDICTION thành công !!!', res['data'])
       setClickStatus("ui active button")
       setActionTextButton("Bắt đầu")
-      setResponse(res['data'])
+
+      //console.log(res['data'])
+      const recsys_images_Param = res['data']['data'].map((item) => {
+            return item
+        })
+
+      const dropBoxParam = recsys_images_Param.map((item, index) => {
+            return {'value': index, 'label': item['type']}
+        })
+      console.log('Set DROPBOX', dropBoxParam)
+      setDropBox(dropBoxParam)
+      setResponse(recsys_images_Param)
+
       }
       catch(err) {
           console.log(err)
@@ -112,7 +123,7 @@ function UploadSingleImage () {
   }
 
   const createSubmitButton = (files, clickStatus) => {
-    if (files != null) {   
+    if (files !== null) {   
       console.log('Creating createSubmitButton', files.length, clickStatus)
       return (
           <Button class={clickStatus} onClick={callPredictions}>{actionTextButton}</Button>
@@ -123,7 +134,7 @@ function UploadSingleImage () {
   
   const thumbs = (files) => {
     console.log('Call thumb display', files)
-    if (files != null) {
+    if (files !== null) {
       return (
         <div class="column center">
           <img class="ui large centered image" src={files[0].preview}></img>
@@ -147,9 +158,13 @@ function UploadSingleImage () {
         <div class="ui one column centered grid">
           {createSubmitButton(files, clickStatus)}
         </div>
+        <br/>
+        <hr/>
         <section>
-        {<PredictShow res={response} />} </section>
-      </section>  
+            {<RecSysShow res={response} dropBoxParam={dropBox}/>} 
+        </section>
+    </section>  
+    
   )
 
 }
