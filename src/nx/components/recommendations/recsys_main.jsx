@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 
-import UploadSingleImage from './upload_single.jsx'
+import UploadSingleImage from './upload_single'
 
 class RecSysMain extends Component {
     constructor() {

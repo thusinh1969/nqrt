@@ -156,8 +156,8 @@ function UploadSingleImage () {
         {console.log('Re-redner display')}
         <div style={{cursor : "pointer"}} className="dropzone" {...getRootProps({ className: 'dropzone' })}>
           <input onClick={open} style={{cursor : "pointer"}}  {...getInputProps()}/>
-          <p >Kéo thả ảnh hoặc bấm để chọn tệp. 
-            <br/><i>(Chỉ tệp ảnh và có kích thước nhỏ hơn 4MBytes)</i></p>
+          <div><p >Kéo thả ảnh hoặc bấm để chọn tệp. 
+            <br/><i>(Chỉ tệp ảnh và có kích thước nhỏ hơn 4MBytes)</i></p></div>
         </div>
         <div class="ui one column centered grid">
               {thumbs(files)}
