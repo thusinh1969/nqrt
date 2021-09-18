@@ -57,7 +57,7 @@ function UploadSingleImage () {
   open,
   isDragActive
   } = useDropzone({
-      maxFiles:5,
+      maxFiles:1,
       minSize: 5*1024,
       maxSize: maxSize_img,
       accept: accept_type,
@@ -157,8 +157,8 @@ function UploadSingleImage () {
         {console.log('Re-redner display')}
         <div className="dropzone" {...getRootProps({ className: 'dropzone' })}>
           <input onClick={open} {...getInputProps()}/>
-          <div><p >Kéo thả ảnh hoặc bấm để chọn tệp. 
-            <br/><i>(Chỉ tệp ảnh và có kích thước nhỏ hơn 4MBytes)</i></p></div>
+          <div><p style={{"text-align":"center"}}>Kéo thả chỉ 1 ảnh hoặc bấm vào đây để chọn tệp. 
+            <br/><i>(Chỉ 1 tệp ảnh nhỏ hơn 4MBytes)</i></p></div>
         </div>
         <div class="ui one column centered grid">
               {thumbs(files)}

@@ -11,6 +11,7 @@ import Footer from './nx/components/mainpage/footer'
 import PredictMain from './nx/components/predict_styles/predict_main'
 import RecSysMain  from './nx/components/recommendations/recsys_main'
 import CreationSelect from './nx/components/creations/creation_select'
+import MatchMain from './nx/components/matching/match_main'
 import About from './nx/components/mainpage/about'
 
 //import 'bootstrap/dist/css/bootstrap.css'
@@ -27,6 +28,7 @@ function App() {
           <Route exact path='/style' component={PredictMain}/>
           <Route exact path='/creation' component={CreationSelect}/>
           <Route exact path='/recsys' component={RecSysMain}/>
+          <Route exact path='/match'  component={MatchMain}/>
           <Route exact path='/about' component={About}/>
       </Switch>
       <hr/>

@@ -1,7 +1,7 @@
 import React, { setState, Component } from "react"
 import axios from "axios";
 import 'semantic-ui-css/semantic.min.css'
-import { Button } from "semantic-ui-react"
+import { Button, Form } from "semantic-ui-react"
 class CreationSelect extends Component {
     constructor() {
         super();
@@ -43,7 +43,7 @@ class CreationSelect extends Component {
         formdata.append("style", this.state.style);
         formdata.append("lucky", this.state.lucky);
         formdata.append("trunc", 0.5);
-        formdata.append("scale", 1);
+        formdata.append("scale", 0);
         console.log('PREDICTING... !!!');
     
         try {
@@ -66,33 +66,35 @@ class CreationSelect extends Component {
     
     render() {
         return (
-            <div>
+            <div style={{"display": "flex", "min-height":"15vh", "flex-direction": "column", "padding": "30px"}}>
                 <h2>Chọn các tham số để sáng tạo</h2>
-                <label>
-                Phong cách
-                <select value={this.state.style} onChange={this.handleStyle}>
-                    <option value={0}>Asian</option>
-                    <option value={1}>Coastal</option>
-                    <option value={2}>Contemporary</option>
-                    <option value={3}>Craftsman</option>
-                    <option value={4}>Eclectic</option>
-                    <option value={5}>Farmhouse</option>
-                    <option value={6}>French Country</option>
-                    <option value={7}>Industrial</option>
-                    <option value={9}>Mediterranean</option>
-                    <option value={10}>Mid-century</option>
-                    <option value={11}>Modern</option>
-                    <option value={12}>Rustic</option>
-                    <option value={13}>Scandinavian</option>
-                    <option value={14}>Shabby</option>
-                    <option value={15}>Southwestern</option>
-                    <option value={16}>Traditional</option>
-                    <option value={17}>Transitional</option>
-                    <option value={18}>Tropical</option>
-                    <option value={19}>Victorian</option>
-                </select>
-                </label>
-                <p>Con số may mắn
+                <p>
+                    <label>
+                        Chọn phong cách {'  '}
+                        <select style={{"height": "30px", "width": "auto"}} value={this.state.style} onChange={this.handleStyle}>
+                            <option value={0}>Asian</option>
+                            <option value={1}>Coastal</option>
+                            <option value={2}>Contemporary</option>
+                            <option value={3}>Craftsman</option>
+                            <option value={4}>Eclectic</option>
+                            <option value={5}>Farmhouse</option>
+                            <option value={6}>French Country</option>
+                            <option value={7}>Industrial</option>
+                            <option value={9}>Mediterranean</option>
+                            <option value={10}>Mid-century</option>
+                            <option value={11}>Modern</option>
+                            <option value={12}>Rustic</option>
+                            <option value={13}>Scandinavian</option>
+                            <option value={14}>Shabby</option>
+                            <option value={15}>Southwestern</option>
+                            <option value={16}>Traditional</option>
+                            <option value={17}>Transitional</option>
+                            <option value={18}>Tropical</option>
+                            <option value={19}>Victorian</option>
+                        </select>
+                        </label>
+                </p>
+                <p>Chọn con số may mắn (1 - 1e8) {'  '}
                     <input type="text" onChange={this.handleLucky} onKeyPress={(event) => {
                                                     if (!/[0-9]/.test(event.key)) {
                                                     event.preventDefault();
@@ -103,7 +105,8 @@ class CreationSelect extends Component {
                     }}/>
                 </p>
                 <Button class={this.state.clickStatus} onClick={this.handleSubmit}>{this.state.actionTextButton}</Button>
-                <div>
+                <hr/>
+                <div style={{'display':'flex'}}>
                     {this.state.img!==null ? <img class="ui medium centered image" src={this.state.img} alt="GAN created"></img> : <></>}
                </div>
             </div>

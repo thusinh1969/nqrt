@@ -1,4 +1,7 @@
 import React, { Component } from "react"
+import 'semantic-ui-css/semantic.min.css'
+
+import nqrt_background from "./nqrt_background_1.jpeg"
 
 class MainPage extends Component {
     constructor() {
@@ -7,7 +10,7 @@ class MainPage extends Component {
 
     render() {
         return <div>
-            <h1>Nothing here. It's main Page</h1>
+            <img class="ui medium centered image" src={nqrt_background} alt="NQRT"></img>
         </div>
     }
 }

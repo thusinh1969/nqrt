@@ -13,7 +13,7 @@ class PredictClass extends Component {
         return (
             <div className="classDiv"><h2>Không gian</h2>
                 {this.props.res.class.map((data, index) => <p key={index}>{data.Class} 
-                <ProgressBar colorShift={true} fillColor="orange" percent={data.score*100}/></p>)}
+                <ProgressBar colorShift={false} borderColor="green" fillColor="green" percent={data.score*100}/></p>)}
             </div>
         )
     }

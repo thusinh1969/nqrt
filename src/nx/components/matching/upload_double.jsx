@@ -2,25 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from "axios";
 
-import RecSysShow from './recsys_show.jsx'
-
-//import 'semantic-ui-css/semantic.min.css'
-import './upload.css'
+import Carousel from 'react-grid-carousel'
+import { Row, Col } from 'antd'
 import { Button } from "semantic-ui-react"
 
-function UploadSingleImage () {
+import MatchShow from './match_show.jsx'
+
+function UploadDoubleImage () {
   
   const [files, setFiles] = useState(null)
   const [prediction_status, setPredictionStatus] = useState(0)
   const [clickStatus, setClickStatus] = useState("ui active button")
   const [actionTextButton, setActionTextButton] = useState("Bắt đầu")
   const [response, setResponse] = useState(null)
-  const [dropBox, setDropBox] = useState(null)
 
   const img = {
     display: 'flex',
-    width: 'auto',
-    height: '100%',
+    width: '100%',
+    height: 'auto%',
     align: 'center',
   };    
   const maxSize_img = 5*1024*1024
@@ -55,9 +54,8 @@ function UploadSingleImage () {
   getRootProps,
   getInputProps,
   open,
-  isDragActive
   } = useDropzone({
-      maxFiles:5,
+      maxFiles:2,
       minSize: 5*1024,
       maxSize: maxSize_img,
       accept: accept_type,
@@ -65,7 +63,7 @@ function UploadSingleImage () {
       validator: imageTypeValidator,
       onDrop: acceptedFiles => {
         console.log('Number of files', acceptedFiles.length)
-        if ((acceptedFiles.length > 0) && (acceptedFiles !== files)) {
+        if ((acceptedFiles.length===2) && (acceptedFiles !== files)) {
           setPredictionStatus(1);
           setActionTextButton("Bắt đầu")
           setResponse(null);
@@ -90,10 +88,11 @@ function UploadSingleImage () {
     setActionTextButton("Đang tính toán...")
 
     let formdata = new FormData();
-    formdata.append("images",  files[0]);
+    formdata.append("source_img",  files[0]);
+    formdata.append("dest_img",  files[1]);
 
     try {
-      const res = await axios.post('http://192.168.1.18:8088/recsys', formdata, {
+      const res = await axios.post('http://192.168.1.18:8088/match', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',
@@ -103,18 +102,7 @@ function UploadSingleImage () {
       console.log('PREDICTION thành công !!!', res['data'])
       setClickStatus("ui active button")
       setActionTextButton("Bắt đầu")
-
-      //console.log(res['data'])
-      const recsys_images_Param = res['data']['data'].map((item) => {
-            return item
-        })
-
-      const dropBoxParam = recsys_images_Param.map((item, index) => {
-            return {'value': index, 'label': item['type']}
-        })
-      console.log('Set DROPBOX', dropBoxParam)
-      setDropBox(dropBoxParam)
-      setResponse(recsys_images_Param)
+      setResponse(res['data'])
 
       }
       catch(err) {
@@ -126,7 +114,7 @@ function UploadSingleImage () {
 
   const createSubmitButton = (files, clickStatus) => {
     if (files !== null) {
-        if (files.length > 0) { 
+        if (files.length === 2) { 
             console.log('Creating createSubmitButton', files.length, clickStatus)
             return (
                 <Button class={clickStatus} onClick={callPredictions}>{actionTextButton}</Button>
@@ -137,28 +125,35 @@ function UploadSingleImage () {
   }
   
   const thumbs = (files) => {
-    console.log('Call thumb display', files)
     if (files !== null) {
-        if (files.length > 0) {
+        if (files.length > 0 ) {
+            console.log('Call thumb display', files)
             return (
-                <div class="column center">
-                <img class="ui large centered image" src={files[0].preview}></img>
-            </div>
+                <div class="ui one column">
+                  <Carousel cols={2} rows={1} gap={10} loop>
+                    {files.map((item) => {
+                        return (
+                          <Carousel.Item>
+                            <img  style={img} width="100%" class="ui large image" src={item.preview}/>
+                          </Carousel.Item>)
+                    })}
+                  </Carousel>
+                </div>
             )
         }
     }
     return null
   };
 
-// style={{"cursor" : "pointer"}} 
+  //https://react-grid-carousel.vercel.app/
 
   return (
       <section>
         {console.log('Re-redner display')}
         <div className="dropzone" {...getRootProps({ className: 'dropzone' })}>
           <input onClick={open} {...getInputProps()}/>
-          <div><p >Kéo thả ảnh hoặc bấm để chọn tệp. 
-            <br/><i>(Chỉ tệp ảnh và có kích thước nhỏ hơn 4MBytes)</i></p></div>
+          <div><p style={{"text-align":"center"}}>Kéo thả 2 ảnh hoặc bấm vào đây để chọn tệp. 
+            <br/><i>(Chỉ 2 tệp ảnh nhỏ hơn 4MBytes)</i></p></div>
         </div>
         <div class="ui one column centered grid">
               {thumbs(files)}
@@ -169,7 +164,7 @@ function UploadSingleImage () {
         <br/>
         <hr/>
         <section>
-            {<RecSysShow res={response} dropBoxParam={dropBox}/>} 
+            {<MatchShow res={response}/>} 
         </section>
     </section>  
     
@@ -177,4 +172,4 @@ function UploadSingleImage () {
 
 }
 
-export default UploadSingleImage;
+export default UploadDoubleImage;

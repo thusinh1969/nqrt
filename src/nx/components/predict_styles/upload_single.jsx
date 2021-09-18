@@ -56,7 +56,7 @@ function UploadSingleImage () {
   getRootProps,
   getInputProps
   } = useDropzone({
-      maxFiles:5,
+      maxFiles:1,
       minSize: 5*1024,
       maxSize: maxSize_img,
       accept: accept_type,
@@ -143,9 +143,9 @@ function UploadSingleImage () {
       <section>
         {console.log('Re-redner display')}
         <div  className="dropzone" {...getRootProps({ className: 'dropzone' })}>
-          <input {...getInputProps()} />
-          <p>Kéo thả ảnh hoặc bấm vào đây để chọn tệp. 
-            <br/><i>(Chỉ tệp ảnh và có kích thước nhỏ hơn 4MBytes)</i></p>
+          <input {...getInputProps()}/>
+          <p style={{"text-align":"center"}}>Kéo thả chỉ 1 ảnh hoặc bấm vào đây để chọn tệp. 
+            <br/><i>(Chỉ 1 tệp ảnh nhỏ hơn 4MBytes)</i></p>
         </div>
         <div class="ui one column centered grid">
               {thumbs(files)}
@@ -153,6 +153,8 @@ function UploadSingleImage () {
         <div class="ui one column centered grid">
           {createSubmitButton(files, clickStatus)}
         </div>
+        <br/>
+        <hr/>
         <section>
         {<PredictShow res={response} />} </section>
       </section>  

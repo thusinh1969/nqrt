@@ -9,6 +9,7 @@ class PredictMain extends Component {
 
     render() {
         return <div>
+            <h2 style={{"align": "center", "padding":"10px"}}>Tìm hiểu Phong cách Nội thất</h2>
             <UploadSingleImage />
         </div>
     }

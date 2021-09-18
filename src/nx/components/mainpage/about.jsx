@@ -6,8 +6,8 @@ class About extends Component {
     }
 
     render() {
-        return <div>
-            <h3>About NQRT</h3>
+        return <div style={{'text-align': 'center'}}>
+            <h4>Email <a href="nguyen@hatto.com">nguyen@hatto.com</a></h4>
         </div>
     }
 }

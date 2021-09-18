@@ -3,6 +3,8 @@ import MultipleGridImages from 'react-multiple-image-grid'
 import Carousel from 'react-grid-carousel'
 import './recsys_show.css'
 
+import { Row, Col } from 'antd'
+
 export default class RecSysShow_Type extends Component {
     constructor(props) {
         super();
@@ -11,12 +13,15 @@ export default class RecSysShow_Type extends Component {
         if (this.props.res !== null) {
             console.log('Images returned: ', this.props.res)
             return (
-                <Carousel cols={3} rows={2} gap={10} loop>
+                <Carousel cols={3} rows={1} gap={10} loop>
                     {this.props.res['matches'].map((item) => {
                         return <Carousel.Item>
-                            <img width="100%" height='auto' src={item['url']} />
-                            <br/> ** SCORE: {item['score']} ** 
-                            <br/>{item['SAP_desc']}
+                            <Row>
+                                <Col><img width="100%" height='auto' src={item['url']}/></Col>
+                            </Row>
+                            <Row>
+                                <Col>** SCORE: {item['score']} ** {item['SAP_desc']}</Col>
+                            </Row>
                         </Carousel.Item>
                         })
                     }

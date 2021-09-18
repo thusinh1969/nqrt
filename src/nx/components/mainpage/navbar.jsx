@@ -22,18 +22,16 @@ class NavBar extends Component {
                 expand='md'
                 collapseOnSelect>
                     <Navbar.Brand>
-                        <img src={logo} width='50px' height='50px' alt='logo'/>{' '}
-                        NQRT
+                    <Nav.Link style={{"color":"white"}} href='/'><img src={logo} width='50px' height='50px' alt='logo'/><b>NQRT</b></Nav.Link>
                     </Navbar.Brand>
 
                     <Navbar.Toggle />
                     <Navbar.Collapse>
                         <Nav>
-                            <Nav.Link href='/'>Trang chủ</Nav.Link>
                             <Nav.Link href='/style'>Phong cách</Nav.Link>
-
+                            <Nav.Link href='/match'>So sánh</Nav.Link>
                             <NavDropdown title='Tìm mua'>
-                                <NavDropdown.Item href='https://nhaxinh.vn/' target='_blank'>Nhà Xinh</NavDropdown.Item>
+                                <NavDropdown.Item href='https://nhaxinh.com/' target='_blank'>Nhà Xinh</NavDropdown.Item>
                                 <NavDropdown.Divider/>
                                 <NavDropdown.Item href='/recsys'>Cửa hàng NQRT</NavDropdown.Item>
                             </NavDropdown>
