@@ -13,7 +13,7 @@ import RecSysMain  from './nx/components/recommendations/recsys_main'
 import CreationSelect from './nx/components/creations/creation_select'
 import About from './nx/components/mainpage/about'
 
-import 'bootstrap/dist/css/bootstrap.css'
+//import 'bootstrap/dist/css/bootstrap.css'
 
 function App() {
   return (
