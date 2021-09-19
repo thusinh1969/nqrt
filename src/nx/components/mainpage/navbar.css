@@ -1,8 +1,12 @@
 .bg-navbarbg {
-    background-color: darkblue;
+    background-color: #FF9F00
 }
 
 .content {
     padding: 12px;
     height: 3000px;
+}
+
+.text-nav {
+    color: darkgreen;
 }

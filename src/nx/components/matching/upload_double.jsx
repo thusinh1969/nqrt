@@ -92,7 +92,7 @@ function UploadDoubleImage () {
     formdata.append("dest_img",  files[1]);
 
     try {
-      const res = await axios.post('http://192.168.1.18:8088/match', formdata, {
+      const res = await axios.post('http://192.168.1.18:8088/nqrt/match', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',

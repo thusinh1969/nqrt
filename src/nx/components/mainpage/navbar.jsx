@@ -3,7 +3,7 @@ import React, { Component } from "react"
 import 'bootstrap/dist/css/bootstrap.css'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
-import logo from './logo.svg'
+import logo from './logo_nqrt.jpg'
 
 import './navbar.css'
 
@@ -15,29 +15,29 @@ class NavBar extends Component {
     render() {
         return (
             <div class="NavBar">
-                <Navbar bg="dark" 
+                <Navbar className="bg-navbarbg"
                 variant="dark" 
                 fixed='top'
                 sticky='top' 
                 expand='md'
                 collapseOnSelect>
                     <Navbar.Brand>
-                    <Nav.Link style={{"color":"white"}} href='/'><img src={logo} width='50px' height='50px' alt='logo'/><b>NQRT</b></Nav.Link>
+                    <Nav.Link style={{"color":"white"}} href='/'><img src={logo} width='auto' height='30px' alt='logo'/></Nav.Link>
                     </Navbar.Brand>
 
                     <Navbar.Toggle />
                     <Navbar.Collapse>
                         <Nav>
-                            <Nav.Link href='/style'>Phong cách</Nav.Link>
-                            <Nav.Link href='/match'>So sánh</Nav.Link>
-                            <NavDropdown title='Tìm mua'>
-                                <NavDropdown.Item href='https://nhaxinh.com/' target='_blank'>Nhà Xinh</NavDropdown.Item>
+                            <Nav.Link style={{"color":"darkgreen"}} href='/style'><b>Phong cách</b></Nav.Link>
+                            <Nav.Link style={{"color":"darkgreen"}}  href='/match'><b>So sánh</b></Nav.Link>
+                            <NavDropdown style={{"color":"darkgreen"}} color="darkgreen" title='Tìm mua'>
+                                <NavDropdown.Item  style={{"color":"darkgreen"}} href='https://nhaxinh.com/' target='_blank'><b>Nhà Xinh</b></NavDropdown.Item>
                                 <NavDropdown.Divider/>
-                                <NavDropdown.Item href='/recsys'>Cửa hàng NQRT</NavDropdown.Item>
+                                <NavDropdown.Item style={{"color":"darkgreen"}} href='/recsys'><b>Cửa hàng NQRT</b></NavDropdown.Item>
                             </NavDropdown>
 
-                            <Nav.Link href='/creation'>Sáng tạo</Nav.Link>
-                            <Nav.Link href='/about'>Liên hệ</Nav.Link>
+                            <Nav.Link style={{"color":"darkgreen"}}  href='/creation'><b>Sáng tạo</b></Nav.Link>
+                            <Nav.Link style={{"color":"darkgreen"}}  href='/about'><b>Liên hệ</b></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

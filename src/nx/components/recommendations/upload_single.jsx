@@ -93,7 +93,7 @@ function UploadSingleImage () {
     formdata.append("images",  files[0]);
 
     try {
-      const res = await axios.post('http://192.168.1.18:8088/recsys', formdata, {
+      const res = await axios.post('http://192.168.1.18:8088/nqrt/recsys', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',

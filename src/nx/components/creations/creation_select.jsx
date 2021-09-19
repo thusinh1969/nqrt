@@ -47,7 +47,7 @@ class CreationSelect extends Component {
         console.log('PREDICTING... !!!');
     
         try {
-            const res = await axios.post('http://192.168.1.18:8088/creative', formdata, {
+            const res = await axios.post('http://192.168.1.18:8088/nqrt/creative', formdata, {
                 headers: {
                 'Content-Type': 'multipart/form-data',
                 'Cache-Control': 'no-cache',
