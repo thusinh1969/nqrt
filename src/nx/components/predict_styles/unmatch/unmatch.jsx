@@ -34,7 +34,7 @@ export default class PredictUnmatch extends Component {
                 </Slider>
                 </div>
             )
-        } else {return null}
+        } else {return <div className='mydiv'>Chúc mừng bạn có 1 ngữ cảnh và phong cách tương đồng toàn diện !</div>}
     }
 }
 //https://react-slick.neostack.com/docs/get-started

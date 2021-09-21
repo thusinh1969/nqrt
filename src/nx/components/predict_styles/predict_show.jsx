@@ -36,7 +36,7 @@ render () {
         const panes = [
             { menuItem: 'Diễn giải', render: () => <Tab.Pane><div><PredictDescribe res={this.props.res}/></div></Tab.Pane> },
             { menuItem: 'Đặc thù', render: () => <Tab.Pane><div><PredictHeatmap  res={this.props.res}/></div></Tab.Pane> },
-            { menuItem: (<Menu.Item key='unmatch'>Không tương đồng{this.state.hasUnmatch})</Menu.Item>), 
+            { menuItem: (<Menu.Item key='unmatch'>Không tương đồng{this.state.hasUnmatch}</Menu.Item>), 
                         render: () => <Tab.Pane><PredictUnmatch  res={this.props.res}/></Tab.Pane>},
         ]
         if (this.props.res === null){

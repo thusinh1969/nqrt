@@ -5,6 +5,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
 import './recsys_show_type'
+import ClapHand from '../claps.jsx';
 
 export default class RecSysShow extends Component {
     constructor(props) {

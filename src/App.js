@@ -18,7 +18,7 @@ import About from './nx/components/mainpage/about'
 
 function App() {
   return (
-    <div>
+    <div style={{"font-family": "Be Vietnam Pro"}}>
       <Header />
       <hr/>
       <NavBar />

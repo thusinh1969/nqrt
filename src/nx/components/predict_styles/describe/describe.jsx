@@ -4,6 +4,8 @@ import PredictClass from './predicted_class.jsx'
 import PredictStyle from './predicted_style.jsx'
 import PredictColor from './predicted_color.jsx'
 
+import ClapHand from '../../claps.jsx';
+
 class PredictDescribe extends Component {
     constructor(props) {
         super()
@@ -11,6 +13,7 @@ class PredictDescribe extends Component {
 
     render() {
         return <div>
+                    <div className="classDiv"><ClapHand page_claps="predictions"/></div>
                 <div>
                     <hr/>
                     <PredictClass res={this.props.res}/>

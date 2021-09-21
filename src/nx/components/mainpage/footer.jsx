@@ -11,6 +11,7 @@ class Footer extends Component {
             <div>
                 <h2 class="ui dark small center aligned icon header">
                     (C) Nhà Quê Ra Tỉnh. Phiên bản thử nghiệm.
+                    <p><br/></p>
                 </h2>
             </div>
         )

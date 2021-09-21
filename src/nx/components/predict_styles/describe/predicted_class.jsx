@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import ProgressBar from 'react-percent-bar';
 
 import './predicted_class.scss';
+import ClapHand from '../../claps.jsx';
 
 class PredictClass extends Component {
     constructor(props) {

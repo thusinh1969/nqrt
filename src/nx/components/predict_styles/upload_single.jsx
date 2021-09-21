@@ -94,7 +94,7 @@ function UploadSingleImage () {
     formdata.append("images",  files[0]);
 
     try {
-      const res = await axios.post('http://192.168.1.18:8088/nqrt/styling', formdata, {
+      const res = await axios.post('http://home.hoithay.com:443/nqrt/styling', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',
@@ -144,7 +144,7 @@ function UploadSingleImage () {
         {console.log('Re-redner display')}
         <div  className="dropzone" {...getRootProps({ className: 'dropzone' })}>
           <input {...getInputProps()}/>
-          <p style={{"text-align":"center"}}>Kéo thả chỉ 1 ảnh hoặc bấm vào đây để chọn tệp. 
+          <p style={{"text-align":"center"}}>Kéo thả chỉ 1 ảnh hoặc bấm vào đây. 
             <br/><i>(Chỉ 1 tệp ảnh nhỏ hơn 4MBytes)</i></p>
         </div>
         <div class="ui one column centered grid">

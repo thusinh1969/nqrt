@@ -2,6 +2,9 @@ import React, { setState, Component } from "react"
 import axios from "axios";
 import 'semantic-ui-css/semantic.min.css'
 import { Button, Form } from "semantic-ui-react"
+
+import ClapHand from '../claps.jsx';
+
 class CreationSelect extends Component {
     constructor() {
         super();
@@ -47,7 +50,7 @@ class CreationSelect extends Component {
         console.log('PREDICTING... !!!');
     
         try {
-            const res = await axios.post('http://192.168.1.18:8088/nqrt/creative', formdata, {
+            const res = await axios.post('http://home.hoithay.com:443/nqrt/creative', formdata, {
                 headers: {
                 'Content-Type': 'multipart/form-data',
                 'Cache-Control': 'no-cache',
@@ -67,7 +70,8 @@ class CreationSelect extends Component {
     render() {
         return (
             <div style={{"display": "flex", "min-height":"15vh", "flex-direction": "column", "padding": "30px"}}>
-                <h2>Chọn các tham số để sáng tạo</h2>
+                <h2>Chọn các tham số để AI sáng tạo. <br/> <h6>Tất cả Nội Thất bạn sẽ thấy dưới đây CHƯA TỪNG CÓ TRÊN CÕI ĐỜI NÀY.</h6></h2>
+                <br/><h6><i>(Tính năng đang xây chỉ cho Phòng Khách, còn xấu nhé)</i></h6>
                 <p>
                     <label>
                         Chọn phong cách {'  '}
@@ -107,7 +111,7 @@ class CreationSelect extends Component {
                 <Button class={this.state.clickStatus} onClick={this.handleSubmit}>{this.state.actionTextButton}</Button>
                 <hr/>
                 <div style={{'display':'flex'}}>
-                    {this.state.img!==null ? <img class="ui medium centered image" src={this.state.img} alt="GAN created"></img> : <></>}
+                    {this.state.img!==null ? <div style={{"display":"flex", "flex-direction":"column", "align-items":"center"}}><div><ClapHand page_claps="creative"/></div><br/><img class="ui medium centered image" src={this.state.img} alt="GAN created"></img></div> : <></>}
                </div>
             </div>
         )

@@ -1,6 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import { Row, Col } from 'antd'
 import ProgressBar from 'react-percent-bar';
+
+import ClapsButton from '../../../gatsby-claps'
 
 import {
     StopOutlined,
@@ -8,6 +10,8 @@ import {
   } from '@ant-design/icons';
 
 import './match_show.css'
+
+import ClapHand from '../claps.jsx';
 
 export default function  MatchShow (props) {
     
@@ -17,18 +21,20 @@ export default function  MatchShow (props) {
             <div>
                 <>
                 <Row>
-                    <Col span={8}>
+                    <div className="classDiv"><ClapHand page_claps="matching"/></div>
+                    <Col span={12}>
                         <div className="classDiv"><h2>Theo phong cách</h2>
                             <p>Score: <b>{(props.res['data'][1]['style_score']*100).toFixed(1)} %</b></p>
                             <p>
                             {props.res['data'][1]['style_score'] > 0 ? 
                                 (<ProgressBar colorShift={false} borderColor="green" fillColor="green" percent={props.res['data'][1]['style_score']*100}/>) : 
                                 (<StopTwoTone twoToneColor="#eb2f96" />)
-                            }
+                            } 
                             </p>
                         </div>
                     </Col>
                 </Row> 
+                <br/>
                 <Row>
                     <Col span={8}>
                         <div className="classDiv"><h2>Theo ngữ cảnh</h2>
@@ -42,6 +48,7 @@ export default function  MatchShow (props) {
                         </div>
                     </Col>
                 </Row> 
+                <br/>
                 <Row>
                     <Col span={8}>
                         <div className="classDiv"><h2>Theo cảm quan</h2>

@@ -9,7 +9,7 @@ class MatchMain extends Component {
 
     render() {
         return <div>
-            <h2 style={{"align": "center", "padding":"10px"}}>So sánh nội thất và phong cách</h2>
+            <h2 style={{"align": "center", "padding":"10px"}}>So sánh nội thất và ngữ cảnh</h2>
             <UploadDoubleImage />
         </div>
     }
