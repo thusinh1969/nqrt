@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import ProgressBar from 'react-percent-bar';
 
+import ProgressBarNew from "./progress-bar.component";
+
 import './predicted_class.scss';
 
 class PredictColor extends Component {
@@ -12,8 +14,13 @@ class PredictColor extends Component {
         console.log('---> Class display prediction', this.props.res.color)
         return (
             <div className="classDiv"><h2>Màu chủ đạo</h2>
-                {this.props.res.color.map((data, index) => <p key={index}>{data.Class} 
-                <ProgressBar colorShift={false} borderColor="green" fillColor="green" percent={data.score*100}/></p>)}
+                {this.props.res.color.map((data, index) => { 
+                    return (
+                        <div key={index}>{data.Class} ({data.hex})
+                        <ProgressBarNew borderColor="green" bgcolor={data.hex} completed={(data.score*100).toFixed(1)}/></div>
+                        )
+                    }
+                )}
             </div>
         )
     }
