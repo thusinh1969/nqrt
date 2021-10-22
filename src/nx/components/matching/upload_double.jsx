@@ -92,7 +92,7 @@ function UploadDoubleImage () {
     formdata.append("dest_img",  files[1]);
 
     try {
-      const res = await axios.post('http://home.hoithay.com:443/nqrt/match', formdata, {
+      const res = await axios.post('/nqrt/match', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',

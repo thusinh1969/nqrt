@@ -94,7 +94,7 @@ function UploadSingleImage () {
     formdata.append("images",  files[0]);
 
     try {
-      const res = await axios.post('http://home.hoithay.com:443/nqrt/styling', formdata, {
+      const res = await axios.post('/nqrt/styling', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Cache-Control': 'no-cache',

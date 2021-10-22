@@ -50,7 +50,7 @@ class CreationSelect extends Component {
         console.log('PREDICTING... !!!');
     
         try {
-            const res = await axios.post('http://home.hoithay.com:443/nqrt/creative', formdata, {
+            const res = await axios.post('/nqrt/creative', formdata, {
                 headers: {
                 'Content-Type': 'multipart/form-data',
                 'Cache-Control': 'no-cache',
